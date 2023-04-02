@@ -1,0 +1,41 @@
+extends layout.pug 
+
+block content 
+    section.section.page
+        if book
+            form.form#update-form(data-id= book.id)
+                label Title
+                input.input(type="text", name="title" value= book.title)
+
+                label Author
+                input.input(type="text", name="author" value= book.author)
+
+                label Year
+                input.input(type="number", name="year", value= book.year)
+
+                label Module 
+                select.input(name="module")
+                    each module in modules 
+                        if module.moduleId == book.module
+                            option(value= module.moduleId, selected) #{ module.title }
+                        else      
+                            option(value= module.moduleId) #{ module.title }
+                button.input#update-record Update             
+        
+        else 
+            form.form(action="/books/create", method="POST")
+                label Title
+                input.input(type="text", name="title" required)
+
+                label Author
+                input.input(type="text", name="author" required)
+
+                label Year
+                input.input(type="number", name="year" min="1" max="2023" required)
+
+                label Module 
+                select.input(name="module")
+                    each module in modules 
+                        option(value= module.moduleId, selected) #{ module.title }     
+                
+                button.input#submit Submit 
